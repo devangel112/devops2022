@@ -24,6 +24,7 @@ public class PerfilesWS {
     PerfilesJDBC repo;
 
     // localhost:8181/cuentas/{cuenta-id}/perfiles/{perfil-id}
+    // Un saludo a mi compa el Beto.
     @PutMapping("/{perfil-id}")
     public ResponseEntity<?> modificarPerfil(@PathVariable("perfil-id") int perfilId,
             @RequestBody Perfiles perfil) {
