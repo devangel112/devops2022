@@ -31,7 +31,7 @@ public class ActoresJDBC {
     }
 
     public void desactivar(int actor_id) {
-        String sql = "UPDATE actores SET activo = 0 WHERE id = ?";
+        String sql = "UPDATE actores SET activo = 0, eliminado = CURRENT_TIMESTAMP() WHERE id = ?";
         conexion.update(sql, actor_id);
     }
 }
