@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
-@RequestMapping("/actor")
+@RequestMapping("/actores")
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE,
         RequestMethod.PATCH })
 public class ActoresWS {
@@ -30,7 +30,7 @@ public class ActoresWS {
     ActoresJDBC repoActores;
 
     // localhost:8181/actores/
-    @PostMapping("/actores")
+    @PostMapping
     public ResponseEntity<?> insertarActor(@RequestBody Actores nuevoActor) {
         try {
             int id = repoActores.insertar(nuevoActor);
