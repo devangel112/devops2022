@@ -3,6 +3,7 @@ package com.netflix.itlp.models;
 import java.util.Date;
 
 public class Categorias {
+	private int id;
 	private String clasificacion; //varchar
     private String descripcion;
     private int activo;
@@ -45,6 +46,12 @@ public class Categorias {
 	}
 	public void setEliminado(Date eliminado) {
 		this.eliminado = eliminado;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	
