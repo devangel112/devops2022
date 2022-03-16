@@ -32,4 +32,14 @@ public class GenerosJDBC {
         String sql = "UPDATE generos SET activo = 0, eliminado = CURRENT_TIMESTAMP() WHERE id = ?";
         conexion.update(sql, genero_id);
     }
+
+    public void asignarGeneroPelicula(int genero_id, int pelicula_id) {
+        String sql = "INSERT INTO genero_pelicula (generos_id, peliculas_id) VALUES (?, ?)";
+        conexion.update(sql, genero_id, pelicula_id);
+    }
+
+    public void asignarGeneroSerie(int genero_id, int serie_id) {
+        String sql = "INSERT INTO genero_serie (generos_id, series_id) VALUES (?, ?)";
+        conexion.update(sql, genero_id, serie_id);
+    }
 }
