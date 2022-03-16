@@ -3,9 +3,8 @@ package com.netflix.itlp.controllers;
 import java.util.List;
 
 import com.netflix.itlp.dao.CategoriasJDBC;
-import com.netflix.itlp.dao.PerfilesJDBC;
 import com.netflix.itlp.models.Categorias;
-import com.netflix.itlp.models.Perfiles;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -23,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/cuentas")
+@RequestMapping("/categorias")
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE,
         RequestMethod.PATCH })
 public class CategoriasWS {
@@ -31,30 +30,48 @@ public class CategoriasWS {
     @Autowired
     CategoriasJDBC repo;
 
-    // localhost:8181/cuentas/{cuenta-id}
-    @PutMapping("/{cuenta-id}")
-    public ResponseEntity<?> modificarCuenta(@PathVariable("cuenta-id") int cuentaId, @RequestBody Cuentas cuenta) {
-        repo.modificarCuenta(cuentaId, cuenta);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    //Modificar: localhost:8181/categorias/{categoria-id}
+    @PutMapping("/{categoria-id}")
+    public ResponseEntity<?> modificarCategoria(@PathVariable("categoria-id") int categoriaId, @RequestBody Categorias categoria) {
+    	try {
+    		repo.modificarCategoria(categoriaId, categoria);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+    	} catch (DataAccessException e) {
+    		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    	}
+        
     }
 
-    // localhost:8181/cuentas/{cuenta-id}
-    @DeleteMapping("/{cuenta-id}")
-    public ResponseEntity<?> desactivarCuenta(@PathVariable("cuenta-id") int cuentaId) {
-        repo.desactivar(cuentaId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    //Descativar: localhost:8181/categorias/{categoria-id}
+    @DeleteMapping("/{categoria-id}")
+    public ResponseEntity<?> desactivarCategoria(@PathVariable("categoria-id") int categoriaId) {
+    	try {
+    		repo.desactivar(categoriaId);
+            return new ResponseEntity<>(HttpStatus.OK);
+    	} catch (DataAccessException e) {
+    		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    	}
+        
     }
 
-    // Perfiles
-    @Autowired
-    PerfilesJDBC repoPerfiles;
-
-    // localhost:8181/cuentas/{cuenta-id}/perfiles
-    @PostMapping("/{cuenta-id}/perfiles")
-    public ResponseEntity<?> insertarPerfil(@PathVariable("cuenta-id") int cuentaId,
-            @RequestBody Perfiles nuevo_perfil) {
+    //Listar
+    @GetMapping
+    public ResponseEntity<?> listarCategoria() {
+    	try {
+    		List<Categorias> resultado = repo.listar();
+    		 return new ResponseEntity<>(HttpStatus.OK); 
+    	} catch (DataAccessException e) {
+    		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    	}    
+    }
+    
+    //Agregar
+    // localhost:8181/categorias
+    @PostMapping
+    public ResponseEntity<?> insertarCategoria(
+            @RequestBody Categorias nueva_categoria) {
         try {
-            int id = repoPerfiles.insertar(cuentaId, nuevo_perfil);
+            int id = repo.insertar(nueva_categoria);
             return new ResponseEntity<>(id, HttpStatus.CREATED);
         } catch (DataAccessException e) {
             System.out.println(e.getMessage());
@@ -62,14 +79,4 @@ public class CategoriasWS {
         }
     }
 
-    // localhost:8181/cuentas/{cuenta-id}/perfiles
-    @GetMapping("/{cuenta-id}/perfiles")
-    public ResponseEntity<?> consultarPerfiles(@PathVariable("cuenta-id") int cuentaId) {
-        try {
-            List<Perfiles> resultado = repoPerfiles.listar(cuentaId);
-            return new ResponseEntity<>(resultado, HttpStatus.OK);
-        } catch (DataAccessException e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-    }
 }

@@ -42,7 +42,7 @@ public class CategoriasJDBC {
         }
      
         // Metodo pubico
-    	public List<Categorias> consultar() {
+    	public List<Categorias> listar() {
     		String sql = "SELECT * FROM categorias";
     		return conexion.query(sql, new CategoriasRM()); // Regresa una lista 
     	}
