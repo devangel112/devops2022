@@ -1,11 +1,13 @@
 package com.netflix.itlp.dao;
 
 import com.netflix.itlp.models.Categorias;
-import com.netflix.itlp.models.Planes;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -36,16 +38,14 @@ public class CategoriasJDBC {
      
         
         public void desactivar(int categoria_id) {
-                String sql = "UPDATE categorias SET activo = 0 WHERE id = ?";
+                String sql = "UPDATE categorias SET activo = 0, eliminado = NOW() WHERE id = ?";
                 conexion.update(sql,
                                 categoria_id);
         }
      
         // Metodo pubico
     	public List<Categorias> listar() {
-    		String sql = "SELECT * FROM categorias";
+    		String sql = "SELECT * FROM categorias WHERE activo = 1";
     		return conexion.query(sql, new CategoriasRM()); // Regresa una lista 
-    	}
-       
-        
+    	}      
 }

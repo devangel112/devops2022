@@ -59,7 +59,7 @@ public class CategoriasWS {
     public ResponseEntity<?> listarCategoria() {
     	try {
     		List<Categorias> resultado = repo.listar();
-    		 return new ResponseEntity<>(HttpStatus.OK); 
+    		 return new ResponseEntity<>(resultado, HttpStatus.OK); 
     	} catch (DataAccessException e) {
     		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     	}    
