@@ -6,7 +6,9 @@ import com.netflix.itlp.models.Generos;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class GenerosJDBC {
     @Autowired
     private JdbcTemplate conexion;
@@ -19,12 +21,12 @@ public class GenerosJDBC {
     }
 
     public void modificar(int genero_id, Generos genero) {
-        String sql = "UPDATE actores SET nombre_completo = ?, modificado = CURRENT_TIMESTAMP() WHERE id = ?";
+        String sql = "UPDATE generos SET nombre = ?, modificado = CURRENT_TIMESTAMP() WHERE id = ?";
         conexion.update(sql, genero.getNombre(), genero_id);
     }
 
     public List<Generos> listar() {
-        String sql = "SELECT * FROM actores WHERE activo = 1";
+        String sql = "SELECT * FROM generos WHERE activo = 1";
         return conexion.query(sql, new GenerosRM());
     }
 
