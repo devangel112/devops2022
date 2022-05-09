@@ -1,7 +1,7 @@
 # This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
 # For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
 
-name: CI del Backend
+name: CI/CD del Backend
 
 on:
   push:
@@ -27,3 +27,10 @@ jobs:
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+
+    - name: Subir .jar
+      uses: actions/upload-artifact@v1
+      with: 
+       name: backend Devops 2022
+       path: target/ejemplo_backend-0.0.1.jar
+    
