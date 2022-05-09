@@ -23,7 +23,7 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-        settings-path: / # location for the settings.xml file
+        settings-path: ${{ github.workspace }} # location for the settings.xml file
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
@@ -32,5 +32,5 @@ jobs:
       uses: actions/upload-artifact@v1
       with: 
        name: backend Devops 2022
-       path: target/ejemplo_backend-0.0.1.jar
+       path: /target/ejemplo_backend-0.0.1.jar
     
